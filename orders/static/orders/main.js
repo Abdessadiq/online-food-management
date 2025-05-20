@@ -65,6 +65,7 @@ function check_user_super(){
 }
 
 function add_to_cart(info){
+  incrementCartCount();
   //info will be the stuff displayed in the reciept
   // item description as well as teh price
   display_notif("add to cart", info);
