@@ -1,17 +1,29 @@
 {% extends 'orders/header.html' %}
 
 {% block content %}
-    <div class="container-fluid">
-      <div class="row justify-content-center">
+    <div class="container-fluid mt-4 mb-4 px-2">
+      <div class="row justify-content-center mx-0">
         {% for cat in categories %}
-          <div class="card" style="width: 18rem; margin: 20px;"> <!-- The col-sm-4 stuff is that if its on a small screen it will take up a third of the widths-->
-            <img src={{cat.category_gif}} class="card-img-top" alt="gif for category item" style="width:100%;">
-            <div class="card-body">
-              <h5 class="card-title" >{{cat.category_title}}</h5>
-              <p class="card-text">{{cat.category_description|safe}}</p>
-              <a href="{{cat.category_title}}" class="btn btn-dark" >Order {{cat.category_title}}</a>
+        <div class="col-auto mb-4 px-2">
+          <div class="card h-100 shadow-sm" style="width: 18rem; margin: 0;">
+            <!-- Image avec hauteur fixe -->
+            <img src="{{ cat.category_gif }}" class="card-img-top" alt="{{ cat.category_title }}"
+                 style="height: 220px; object-fit: cover; width: 100%;">
+
+            <!-- Corps de la carte -->
+            <div class="card-body d-flex flex-column p-3">
+              <h5 class="card-title mb-2">{{ cat.category_title }}</h5>
+              <span class="card-text flex-grow-1 small">{{ cat.category_description|safe }}</span>
+
+              <!-- Bouton -->
+              <div class="mt-2">  <!-- mt-2 réduit l'espace au-dessus du bouton -->
+                <a href="{{ cat.category_title }}" class="btn btn-primary w-100 py-2">
+                  <i class="fas fa-utensils me-1"></i>Commander {{ cat.category_title }}
+                </a>
+              </div>
             </div>
           </div>
+        </div>
         {% endfor %}
       </div>
     </div>
