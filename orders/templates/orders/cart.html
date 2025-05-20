@@ -2,84 +2,29 @@
 
 {% block content %}
 
-    <div class="container mt-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0 text-center">
-                    <i class="fas fa-shopping-cart mr-2"></i>Votre Panier
-                </h4>
-            </div>
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <h2 id="cart_heading"></h2>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Item Description</th>
+          <th scope="col">Price</th>
+        </tr>
+        </thead>
+        <tbody id="cart_body">
+        </tbody>
+    </table>
 
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead class="thead-light">
-                        <tr>
-                            <th scope="col" style="width: 10%">#</th>
-                            <th scope="col">Article</th>
-                            <th scope="col" style="width: 20%">Prix</th>
-                        </tr>
-                        </thead>
-                        <tbody id="cart_body">
-                        <!-- Le contenu sera rempli par JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
 
-                <div class="d-flex justify-content-end align-items-center mt-4">
-                    <h4 class="mb-0 mr-3">Total :</h4>
-                    <span class="badge badge-primary badge-pill py-2 px-3" id="total">
-          £0.00
-        </span>
-                </div>
-            </div>
+    <h3>Total: <span class="badge badge-primary" id="total"></span></h3>
+  </div>
 
-            <div class="card-footer bg-transparent">
-                <div class="text-center">
-                    <button id="checkout_button" type="button" class="btn btn-success btn-lg" onclick="checkout()">
-                        <i class="fas fa-credit-card mr-2"></i>Passer la commande
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="row justify-content-center">
+    <button id="checkout_button" type="button" class="btn btn-success" onclick="checkout()">Checkout</button>
+  </div>
+</div>
 
-    <style>
-        /* Styles modernes */
-        .card {
-            border-radius: 10px;
-            border: none;
-        }
-
-        .table-hover tbody tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        #checkout_button {
-            min-width: 200px;
-            transition: all 0.3s;
-        }
-
-        #checkout_button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .badge-pill {
-            font-size: 1.1rem;
-            padding: 0.5em 1em;
-        }
-    </style>
-
-    <script>
-        // Assurez-vous que ces fonctions existent dans votre fichier JS
-        function updateCartDisplay() {
-            // Votre logique existante de mise à jour du panier
-        }
-
-        function checkout() {
-            // Votre logique existante de checkout
-        }
-    </script>
 
 {% endblock %}
