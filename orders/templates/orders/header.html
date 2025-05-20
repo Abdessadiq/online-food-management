@@ -1,67 +1,250 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+  <!-- Meta tags optimisés -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Food ordering system - Commandez vos plats préférés en ligne">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- For the toasts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'orders/main.js' %}">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+  <!-- Toastr notifications -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
 
-    <title>Food ordering</title>
-  </head>
-  <body>
+  <!-- Custom CSS -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'orders/css/main.css' %}">
 
+  <title>Food ordering - Commandez en ligne</title>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Food Ordering System</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <style>
+    :root {
+      --primary-color: #007bff;  /* Changé de rouge à bleu */
+      --secondary-color: #17a2b8; /* Teinte bleue plus claire */
+      --dark-color: #343a40;
+      --light-color: #f8f9fa;
+    }
 
-      <div class="collapse navbar-collapse" id="navbarText">
-        {% if user.is_authenticated %}
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Menu</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/directions">Directions</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/hours">Hours</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/contact">Contact Us</a>
-          </li>
-        </ul>
-        <span class="navbar-text">
-          <a href="/view-orders" class="btn btn-info">View Orders</a>
-          <a href="/cart" id="cart_button" class="btn btn-light" style="color:black;">My Cart <i class="fa fa-shopping-cart" style="font-size:24px;"></i></a>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-          <button type="button" class="btn btn-dark" onclick="logout()">Logout</button>
-        </span>
-        {% endif %}
+    .navbar {
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 0.8rem 1rem;
+      background: white !important;
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      color: var(--primary-color) !important;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: var(--dark-color) !important;
+      margin: 0 0.5rem;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color) !important;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+
+    .btn-cart {
+      background: var(--primary-color);
+      color: white !important;
+      border-radius: 50px;
+      padding: 0.5rem 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-cart:hover {
+      background: #0069d9;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    }
+
+    .btn-orders {
+      background: var(--secondary-color);
+      color: white !important;
+      border-radius: 50px;
+      padding: 0.5rem 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-orders:hover {
+      background: #138496;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
+    }
+
+    .btn-logout {
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color) !important;
+      border-radius: 50px;
+      padding: 0.5rem 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-logout:hover {
+      background: var(--primary-color);
+      color: white !important;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--secondary-color);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wrapper {
+      flex: 1;
+    }
+
+    footer {
+      background-color: var(--primary-color) !important;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <i class="fas fa-utensils me-2"></i>FoodExpress
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      {% if user.is_authenticated %}
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="/" aria-current="page">
+            <i class="fas fa-home me-1"></i> Accueil
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="fas fa-book-open me-1"></i> Menu
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/directions">
+            <i class="fas fa-map-marker-alt me-1"></i> Localisation
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/hours">
+            <i class="fas fa-clock me-1"></i> Horaires
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">
+            <i class="fas fa-envelope me-1"></i> Contact
+          </a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center">
+        <div class="btn-group ms-2" role="group">
+          <a href="/view-orders" class="btn btn-orders me-2">
+            <i class="fas fa-list-alt me-1"></i> Mes commandes
+          </a>
+
+          <a href="/cart" id="cart_button" class="btn btn-cart position-relative">
+            <i class="fas fa-shopping-cart me-1"></i> Panier
+            <span id="cart-count" class="cart-count">0</span>
+          </a>
+        </div>
+
+        <div class="dropdown ms-3">
+          <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-circle me-1"></i> {{ user.username }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-2"></i> Mon profil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            {% if user.is_staff or user.is_superuser %}
+              <li><a class="dropdown-item" href="/admin"><i class="fas fa-cog me-2"></i> Administration </a></li>
+            {% endif %}
+            <li><a class="dropdown-item text-primary" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Déconnexion</a></li>
+          </ul>
+        </div>
       </div>
-    </nav>
+      {% endif %}
+    </div>
+  </div>
+</nav>
 
-    {% block content %}
-    {% endblock %}
+<div class="wrapper">
+  {% block content %}{% endblock %}
+</div>
 
+<footer>
+  &copy; 2025 FoodExpress — Tous droits réservés
+</footer>
 
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="{% static 'orders/main.js' %}"></script>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script src = "{% static 'orders/main.js' %}"></script>
-  </body>
+<script>
+  // Mettre à jour le compteur du panier
+  function updateCartCount() {
+    // Ici vous devriez récupérer le nombre réel d'articles dans le panier
+    // depuis votre backend ou localStorage
+    const cartCount = localStorage.getItem('cartCount') || 0;
+    document.getElementById('cart-count').textContent = cartCount;
+  }
+
+  // Appeler cette fonction au chargement de la page
+  document.addEventListener('DOMContentLoaded', updateCartCount);
+</script>
+</body>
 </html>
