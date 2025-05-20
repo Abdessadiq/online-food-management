@@ -3,51 +3,105 @@
 
 {% block content %}
 
-<div class="container-fluid">
-  <div class="row justify-content-center">
+    <div class="container-fluid">
+        <div class="row justify-content-center  mt-5 pt-4">
+            {% if user.is_superuser %}
+                <h4 class="text-center mb-4">
+                    <i class="fas fa-clipboard-list mr-2"></i>Gestion des Commandes
+                    <small class="d-block text-muted mt-2">Cliquez sur les commandes en rouge pour les marquer comme livrées</small>
+                </h4>
+            {% else %}
+                <h4 class="text-center mb-4">
+                    <i class="fas fa-history mr-2"></i>Commandes de : {{user.get_username}}
+                </h4>
+            {% endif %}
+
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col"># Commande</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Date/Heure</th>
+                            <th scope="col">Détails</th>
+                            <th scope="col">Montant</th>
+                        </tr>
+                        </thead>
+                        <tbody id="orders_table">
+                        {% for row in rows %}
+                            <tr class="{% if row.delivered %}table-success{% else %}table-danger mark-as-complete{% endif %}"
+                                {% if user.is_superuser and not row.delivered %}onclick="markAsDelivered({{row.id}})"{% endif %}>
+                                <td>{{row.id}}</td>
+                                <td>{{row.username}}</td>
+                                <td>{{row.time_of_order|date:"d/m/Y H:i"}}</td>
+                                <td>
+                                    <ul class="list-unstyled mb-0">
+                                        {% for item in row.order|format_cart %}
+                                            <li>{{item|format_cart_item}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                                <td>£{{row.price}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% if user.is_superuser %}
-      <h2>(Click on the orders (red) to mark it as delivered)</h2>
-    {% else %}
-      <h2> Orders by: {{user.get_username}} </h2>
+        <script>
+            // Version originale qui fonctionnait
+            function markAsDelivered(orderId) {
+                if(confirm("Marquer la commande #" + orderId + " comme livrée ?")) {
+                    fetch('/mark_order_as_delivered', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: 'id=' + orderId
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                location.reload();
+                            }
+                        });
+                }
+            }
+        </script>
     {% endif %}
 
-    <table class="table">
-        <thead class="thead-light">
-        <tr>
-          <th scope="col">Order ID</th>
-          <th scope="col">Ordered by</th>
-          <th scope="col">Date</th>
-          <th scope="col">Order</th>
-          <th scope="col">Amount Paid</th>
-        </tr>
-        </thead>
-        <tbody id = "orders_table">
-          {% for row in rows %}
-          {% if row.delivered %}
-            <tr class="table-success">
-          {% else %}
-            <tr class="table-danger mark-as-complete">
-          {% endif %}
-              <td>{{row.id}}</td>
-              <td>{{row.username}}</td>
-              <td>{{row.time_of_order}}</td>
-              <td >
-                <ul>
-                  {% for item in row.order|format_cart %}
-                    <li>{{item|format_cart_item}}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-              <td>£{{row.price}}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-    </table>
-
-  </div>
-</div>
-
-
-
+    <style>
+        /* Styles améliorés mais non intrusifs */
+        .mark-as-complete {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .mark-as-complete:hover {
+            transform: translateX(2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .table-success {
+            opacity: 0.9;
+        }
+        h4 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+        .text-muted {
+            font-size: 0.9rem;
+        }
+        .list-unstyled li {
+            padding: 3px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .list-unstyled li:last-child {
+            border-bottom: none;
+        }
+    </style>
 
 {% endblock %}
