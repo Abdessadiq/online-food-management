@@ -156,7 +156,7 @@
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="height: 60px">
   <div class="container">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
       <i class="fas fa-utensils me-2"></i>FoodExpress
     </a>
 
@@ -172,11 +172,11 @@
             <i class="fas fa-home me-1"></i> Accueil
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/">
-            <i class="fas fa-book-open me-1"></i> Menu
-          </a>
-        </li>
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" href="/">-->
+<!--            <i class="fas fa-book-open me-1"></i> Menu-->
+<!--          </a>-->
+<!--        </li>-->
         <li class="nav-item">
           <a class="nav-link" href="/directions">
             <i class="fas fa-map-marker-alt me-1"></i> Localisation
@@ -192,20 +192,26 @@
             <i class="fas fa-envelope me-1"></i> Contact
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/directions">
+            <i class="fas fa-map-marker-alt me-1"></i> Localisation
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/view-orders" class="nav-link">
+            <i class="fas fa-list-alt me-1"></i> commandes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/cart" id="cart_button" class="nav-link">
+            <i class="fas fa-shopping-cart me-1"></i> Panier
+            <!--span id="cart-count" class="cart-count">0</span-->
+          </a>
+        </li>
       </ul>
 
       <div class="d-flex align-items-center">
-        <div class="btn-group ms-2" role="group">
-          <a href="/view-orders" class="btn btn-orders me-1">
-            <i class="fas fa-list-alt me-1"></i> Mes commandes
-          </a>
-
-          <a href="/cart" id="cart_button" class="btn btn-cart position-relative">
-            <i class="fas fa-shopping-cart me-1"></i> Panier
-            <span id="cart-count" class="cart-count">0</span>
-          </a>
-        </div>
-
         <div class="dropdown ms-3">
           <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-user-circle me-1"></i> {{ user.username }}
