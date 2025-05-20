@@ -1,0 +1,81 @@
+{% extends 'orders/header.html' %}
+
+{% block content %}
+
+    <!-- Ajoutez Font Awesome dans votre header.html si ce n'est pas déjà fait -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7 mt-5">
+                <div class="card shadow-sm mt-5 mb-5">
+                    <div class="card-body p-4">
+                        <h4 class="card-title text-center mb-4">Connexion</h4>
+
+                        {% if form.errors %}
+                            <div class="alert alert-danger alert-dismissible fade show small">
+                                Identifiants incorrects. Veuillez réessayer.
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
+
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="form-group mb-3">
+                                <label for="id_username" class="small font-weight-bold">Nom d'utilisateur</label>
+                                <input type="text" name="username" id="id_username"
+                                       class="form-control form-control-sm" required>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="id_password" class="small font-weight-bold">Mot de passe</label>
+                                <input type="password" name="password" id="id_password"
+                                       class="form-control form-control-sm" required>
+                            </div>
+
+                            <button class="btn btn-primary btn-block" type="submit">
+                                <i class="fas fa-sign-in-alt mr-2"></i>Se connecter
+                            </button>
+                        </form>
+
+                        <div class="text-center mt-4 pt-2 border-top">
+                            <p class="small mb-2">Pas encore de compte ?</p>
+                            <a href="/register" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-user-plus mr-1"></i>S'inscrire
+                            </a>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <a href="#" class="small text-muted">Mot de passe oublié ?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Styles personnalisés */
+        .card {
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .form-control-sm {
+            height: calc(1.5em + 0.75rem + 2px);
+            padding: 0.25rem 0.5rem;
+        }
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+        @media (max-width: 576px) {
+            .card-body {
+                padding: 1.25rem;
+            }
+        }
+    </style>
+
+{% endblock %}
