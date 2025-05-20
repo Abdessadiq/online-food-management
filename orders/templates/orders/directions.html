@@ -1,22 +1,34 @@
 {% extends 'orders/header.html' %}
 
 {% block content %}
-    <div class="container-fluid">
-      <div class="row justify-content-center" style="margin-top:20px;">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28649.499666808922!2d75.43934810721038!3d15.11544675696916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb9109d674d38e3%3A0x683354f6190efee5!2sSmt%20Kamala%20And%20Sri%20Venkappa%20M.%20Agadi%20College%20of%20Engineering%20%26%20Technology!5e0!3m2!1sen!2sin!4v1684836349638!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-        
+    <div class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-12">
+          <div class="card shadow rounded border-0">
+            <div class="card-header bg-primary text-white text-center">
+              <h4 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Notre Localisation</h4>
+            </div>
+            <div class="card-body p-0">
+              <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13294.144430077542!2d-7.6401674!3d33.5883105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7cdcfda5fa67b%3A0x6cf82f1eae6b4cb5!2sCasablanca!5e0!3m2!1sfr!2sma!4v1684836349638!5m2!1sfr!2sma"
+                      width="100%"
+                      height="450"
+                      style="border:0;"
+                      allowfullscreen=""
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+            <div class="card-footer bg-light">
+              <ul class="mb-0">
+                <li><i class="fas fa-location-dot me-2 text-primary"></i>Situé à Casablanca, proche du centre-ville.</li>
+                <li><i class="fas fa-subway me-2 text-primary"></i>Facilement accessible par transport public.</li>
+                <li><i class="fas fa-car-crash me-2 text-danger"></i>Évitez de vous garer dans les zones de stationnement interdit (zone de remorquage) !</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="row justify-content-center" style="margin-top:20px;">
-
-        <ul>
-          <li>Located on Winthrop street right near the corner of JFK Street next to Berk's shoes.</li>
-          <li>We are 2 blocks from the Harvard Square T stop.</li>
-          <li>Do not park across the street from us! It is a tow zone!</li>
-        </ul>
-
-      </div>
-
     </div>
 
 {% endblock %}
