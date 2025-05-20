@@ -1,24 +1,35 @@
 {% extends 'orders/header.html' %}
 
 {% block content %}
-    <div class="container-fluid" style="position: relative;top: 50%;transform: translateY(50%);">
-      <div class="row justify-content-center">
-        <h3>Opening hours</h3>
-      </div>
-      <div class="row justify-content-center">
-        <p>Sunday	1 pm - 12 midnight</p>
-      </div>
-      <div class="row justify-content-center">
+<div class="container py-5">
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-8 text-center">
+      <h3 class="text-primary"><i class="fas fa-clock me-2"></i><u>Heures d'ouverture</u></h3>
+      <p class="text-muted">Voici nos horaires hebdomadaires</p>
+    </div>
+  </div>
 
-        <p>Monday - Thursday	11 am - 1 am</p>
-
-      </div>
-      <div class="row justify-content-center">
-        <p>Friday - Saturday	11 am - 2:30 am*</p>
-      </div>
-      <div class="row justify-content-center">
-        <p>Please note that when the undergraduate students are not in session we close on Friday and Saturday night at 1:00 am instead of 2:30 am.</p>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="bg-white p-4 shadow rounded">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>Dimanche :</strong> 13h00 – Minuit
+          </li>
+          <li class="list-group-item">
+            <strong>Lundi – Jeudi :</strong> 11h00 – 01h00
+          </li>
+          <li class="list-group-item">
+            <strong>Vendredi – Samedi :</strong> 11h00 – 02h30*
+          </li>
+          <li class="list-group-item text-muted small">
+            * Pendant les vacances universitaires, nous fermons à 01h00 au lieu de 02h30 les vendredis et samedis.
+          </li>
+        </ul>
       </div>
     </div>
+  </div>
+</div>
+
 
 {% endblock %}
